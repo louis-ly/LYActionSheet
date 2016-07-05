@@ -1,2 +1,4 @@
-# LYActionSheet
-An actionSheet like WeChat. 一个高仿的微信ActionSheet弹框
+# LYAcitionSheet （高仿微信ActionSheet）
+一个高仿微信ActionSheet的弹框
+
+![image](https://github.com/Joe-Liuyi/LYAcitionSheet/blob/master/gif.gif)
