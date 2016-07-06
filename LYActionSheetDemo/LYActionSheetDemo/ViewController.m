@@ -11,13 +11,18 @@
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIButton *blueBtn;
+@property (weak, nonatomic) IBOutlet UIButton *yellowBtn;
+@property (weak, nonatomic) IBOutlet UIButton *pinkBtn;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _blueBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    _yellowBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    _pinkBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 - (IBAction)uploadAvatar:(UIButton *)sender {

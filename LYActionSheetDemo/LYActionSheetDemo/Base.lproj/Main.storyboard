@@ -78,7 +78,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="blueBtn" destination="f7q-Xc-fdu" id="gZh-bm-m6q"/>
                         <outlet property="label" destination="LZL-Nx-qXw" id="GRg-cR-g8I"/>
+                        <outlet property="pinkBtn" destination="ReX-Fd-hQU" id="JHn-C3-guY"/>
+                        <outlet property="yellowBtn" destination="E7d-bq-i23" id="Q8O-Fe-WEH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
