@@ -1,11 +1,11 @@
 # LYAcitionSheet （高仿微信ActionSheet）
 一个高仿微信ActionSheet的弹框. 
 
-![image](https://github.com/louis-ly/LYActionSheet/blob/master/Snapshots/snapshot1.gif)
+![image](http://oad5jrdyg.bkt.clouddn.com/LYActionSheet_Snapshot1.gif)
 
 AutoLayout屏幕旋转适配
 
-![image](https://github.com/louis-ly/LYActionSheet/blob/master/Snapshots/snapshot2.gif)
+![image](http://oad5jrdyg.bkt.clouddn.com/LYActionSheet_Snapshot2.gif)
 
 ## Podfile
 [CocoaPods](http://cocoapods.org/) is the recommended method to install MessageDisplayKit, just add the following line to `Podfile` 
