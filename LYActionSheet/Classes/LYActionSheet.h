@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LYActionSheet : UIViewController
+@interface LYActionSheet : UIView
 /**
  *  Initialize the actionSheet with some buttonTitles.
  *

@@ -119,26 +119,27 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
 - (instancetype)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveExist:(BOOL)destructiveExist buttonTitles:(NSArray *)array {
     self = [super init];
     if (!self) return nil;
-
+    self.frame = [[UIApplication sharedApplication].delegate window].bounds;
+    
     // create black bottom view
     _blackView = [UIView new];
     _blackView.backgroundColor = [UIColor blackColor];
     _blackView.alpha = 0;
     _blackView.translatesAutoresizingMaskIntoConstraints = NO;
     [_blackView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)]];
-    [self.view addSubview:_blackView];
-    [self.view addConstraints:@[[self item:_blackView attr:LyTop toItem:self.view attr:LyTop cons:0],
-                           [self item:_blackView attr:LyBottom toItem:self.view attr:LyBottom cons:0],
-                           [self item:_blackView attr:LyLeft toItem:self.view attr:LyLeft cons:0],
-                           [self item:_blackView attr:LyRight toItem:self.view attr:LyRight cons:0]]];
+    [self addSubview:_blackView];
+    [self addConstraints:@[[self item:_blackView attr:LyTop toItem:self attr:LyTop cons:0],
+                           [self item:_blackView attr:LyBottom toItem:self attr:LyBottom cons:0],
+                           [self item:_blackView attr:LyLeft toItem:self attr:LyLeft cons:0],
+                           [self item:_blackView attr:LyRight toItem:self attr:LyRight cons:0]]];
 
     // create sheet view
     _sheetView = [[UIView alloc] init];
     _sheetView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_sheetView];
-    _sheetViewBottomConstraint = [self item:_sheetView attr:LyTop toItem:self.view attr:LyBottom cons:0];
-    [self.view addConstraints:@[[self item:_sheetView attr:LyLeft toItem:self.view attr:LyLeft cons:0],
-                           [self item:_sheetView attr:LyRight toItem:self.view attr:LyRight cons:0],
+    [self addSubview:_sheetView];
+    _sheetViewBottomConstraint = [self item:_sheetView attr:LyTop toItem:self attr:LyBottom cons:0];
+    [self addConstraints:@[[self item:_sheetView attr:LyLeft toItem:self attr:LyLeft cons:0],
+                           [self item:_sheetView attr:LyRight toItem:self attr:LyRight cons:0],
                            _sheetViewBottomConstraint]];
     
     // create extralight blurView when the system version is more than iOS8
@@ -163,7 +164,7 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
         [_sheetView addSubview:titleView];
         _titleView = titleView;
         _titleView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:@[[self item:titleView attr:LyLeft toItem:_sheetView attr:LyLeft cons:0],
+        [self addConstraints:@[[self item:titleView attr:LyLeft toItem:_sheetView attr:LyLeft cons:0],
                                [self item:titleView attr:LyRight toItem:_sheetView attr:LyRight cons:0],
                                [self item:titleView attr:LyTop toItem:_sheetView attr:LyTop cons:0],
                                [self item:titleView attr:LyHeight toItem:nil attr:0 cons:LYActionSheetTitleViewHeight]]];
@@ -230,27 +231,28 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
 - (void)showWithClickedButtonAtIndex:(void(^)(NSInteger buttonIndex, NSString *buttonTitle))clickedBlock cancel:(void(^)(NSString *buttonTitle))cancelBlock {
     _clickedBlock = clickedBlock;
     _cancelBlock = cancelBlock;
-    UIViewController *viewCtrl = [UIApplication sharedApplication].keyWindow.rootViewController;
-    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    self.modalPresentationStyle = UIModalPresentationCustom;
-    [viewCtrl presentViewController:self animated:NO completion:^{
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    self.frame = window.bounds;
+    [window addSubview:self];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         _sheetViewBottomConstraint.constant = -_sheetView.frame.size.height;
         [UIView animateWithDuration:LYActionSheetShowTime animations:^{
             _blackView.alpha = LYActionSheetBGAlpha;
             [_sheetView layoutIfNeeded];
         } completion:nil];
-    }];
+    });
 }
 
 
 - (void)selectBtnDidClicked:(UIButton *)btn {
-    if (_clickedBlock) _clickedBlock(btn.tag, btn.currentTitle);
     [self dismiss];
+    if (_clickedBlock) _clickedBlock(btn.tag, btn.currentTitle);
 }
 
 - (void)cancelBtnDidClicked:(UIButton *)btn {
-    if (_cancelBlock) _cancelBlock(btn.currentTitle);
     [self dismiss];
+    if (_cancelBlock) _cancelBlock(btn.currentTitle);
 }
 
 - (void)dismiss {
@@ -259,7 +261,12 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
         _blackView.alpha = 0;
         [_sheetView layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self dismissViewControllerAnimated:NO completion:nil];
+        [self removeFromSuperview];
     }];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.frame = [[UIApplication sharedApplication].delegate window].bounds;
 }
 @end
