@@ -144,7 +144,7 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
     
     // create extralight blurView when the system version is more than iOS8
     UIVisualEffectView *bgBlurView = nil;
-    if (!LY_iOS8) {
+    if (LY_iOS8) {
         bgBlurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
         [_sheetView addSubview:bgBlurView];
         bgBlurView.translatesAutoresizingMaskIntoConstraints = NO;
