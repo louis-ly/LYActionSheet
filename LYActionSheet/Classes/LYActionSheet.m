@@ -239,7 +239,7 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
         _sheetViewBottomConstraint.constant = -_sheetView.frame.size.height;
         [UIView animateWithDuration:LYActionSheetShowTime animations:^{
             _blackView.alpha = LYActionSheetBGAlpha;
-            [_sheetView layoutIfNeeded];
+            [_sheetView.superview layoutIfNeeded];
         } completion:nil];
     });
 }
@@ -259,7 +259,7 @@ typedef NS_OPTIONS(NSUInteger, LYLayoutAttribute) {
     _sheetViewBottomConstraint.constant = 0;
     [UIView animateWithDuration:LYActionSheetDismissTime animations:^{
         _blackView.alpha = 0;
-        [_sheetView layoutIfNeeded];
+        [_sheetView.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];

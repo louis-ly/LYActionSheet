@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LYActionSheet"
-  s.version      = "1.2.0"
+  s.version      = "1.2.1"
   s.summary      = "An actionSheet like WeChat"
   s.homepage     = "https://github.com/louis-ly/LYActionSheet"
   s.license      = "MIT"
